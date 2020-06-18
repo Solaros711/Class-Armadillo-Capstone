@@ -16,23 +16,28 @@ Each User will have their own profile, showing the guides they have posted and t
 **User**
 - Access to Guides in ForeignKey field
 - Access to Charfield for a personal description
+
 **Guide**
 - Access to User (Author) in ForeignKey field
 - Access to Army in ForeignKey field
 - Access to units/gear
 - Access to Charfield for Description
 - Access to Integerfield for Upvotes
+
 **Comment**
 - Access to User (Author) in OneToOne field
 - Access to Charfield for the comment
 - Access to DateTimeField
+
 **Army**
 - Access to unit/gear in ManyToOne field
 - Access to Charfield for a brief description of the army
+
 **Unit**
 - Access to Army in ForeignKey field
 - Access to gear in ManyToMany field
 - Has skill attributes for a fixed number of CharFields and IntergerFields as well as BoolFields for gear
+
 **Gear**
 - Access to Army in ForeignKey field
 - Access to Gear in ManyToMany field
