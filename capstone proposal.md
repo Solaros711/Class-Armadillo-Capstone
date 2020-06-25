@@ -14,33 +14,35 @@ Each User will have their own profile, showing the guides they have posted and t
 ## Data Model
 
 **User**
-- Access to Guides in ForeignKey field
 - Access to Charfield for a personal description
 
 **Guide**
 - Access to User (Author) in ForeignKey field
 - Access to Army in ForeignKey field
-- Access to units/gear
+- Access to units in ManyToMany field
+- Access to gear in ManyToMany field
 - Access to Charfield for Description
 - Access to Integerfield for Upvotes
+- Access to DateTimeField for created date
 
 **Comment**
-- Access to User (Author) in OneToOne field
+- Access to User (Author) in ForeignKey field
+- Access to Guide in ForeignKey field
 - Access to Charfield for the comment
-- Access to DateTimeField
+- Access to DateTimeField for date posted
 
 **Army**
-- Access to unit/gear in ManyToOne field
+- Access to Charfield for a name
 - Access to Charfield for a brief description of the army
 
 **Unit**
 - Access to Army in ForeignKey field
-- Access to gear in ManyToMany field
+- Access to Gear in ManyToMany field
 - Has skill attributes for a fixed number of CharFields and IntergerFields as well as BoolFields for gear
 
 **Gear**
 - Access to Army in ForeignKey field
-- Access to Gear in ManyToMany field
+- Access to Unit in ManyToMany field
 - Has skill attributes for a fixed number of CharFields and IntergerFields as well as BoolFields for units
 
 ## Schedule
