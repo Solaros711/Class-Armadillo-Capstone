@@ -1,0 +1,82 @@
+{
+    "army":[
+        {   
+            "name": "Necrons",
+            "bio": "scary bois"
+        },
+        {
+            "name": "",
+            "bio": ""
+        }
+    ],
+    "units":[
+        {
+            "army": "Necrons",
+            "name": "",
+            "m": "",
+            "ws": "",
+            "bs": "",
+            "s": "",
+            "t": "",
+            "w": "",
+            "a": "",
+            "ld": "",
+            "sv": "",
+            "max": "",
+            "weapons": "",
+            "abilities": "",
+            "specialists": ""
+        },
+        {
+            "army": "Necrons",
+            "name": "",
+            "m": "",
+            "ws": "",
+            "bs": "",
+            "s": "",
+            "t": "",
+            "w": "",
+            "a": "",
+            "ld": "",
+            "sv": "",
+            "max": "",
+            "weapons": "",
+            "abilities": "",
+            "specialists": ""
+        },
+        {
+            "army": "Necrons",
+            "name": "",
+            "m": "",
+            "ws": "",
+            "bs": "",
+            "s": "",
+            "t": "",
+            "w": "",
+            "a": "",
+            "ld": "",
+            "sv": "",
+            "max": "",
+            "weapons": "",
+            "abilities": "",
+            "specialists": ""
+        },
+        {
+            "army": "Necrons",
+            "name": "",
+            "m": "",
+            "ws": "",
+            "bs": "",
+            "s": "",
+            "t": "",
+            "w": "",
+            "a": "",
+            "ld": "",
+            "sv": "",
+            "max": "",
+            "weapons": "",
+            "abilities": "",
+            "specialists": ""
+        }
+    ]
+}
