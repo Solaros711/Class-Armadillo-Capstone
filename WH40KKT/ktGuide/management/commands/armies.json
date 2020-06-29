@@ -9,6 +9,19 @@
             "bio": ""
         }
     ],
+    "weapons":[
+        {
+            "army":"Necrons",
+            "name":"",
+            "range":"",
+            "type":"",
+            "s":"",
+            "ap":"",
+            "d":"",
+            "abilities":[],
+            "pts":0
+        }
+    ],
     "units":[
         {
             "army": "Necrons",
@@ -25,7 +38,8 @@
             "max": "-",
             "weapons": {"Primary": ["Gauss Flayer"]},
             "abilities": {"Reanimation Protocols": "When an Injury roll is made for this model, on an unmodified roll of a 6 the model is not taken out of action and does not suffer a flesh wound. Instead it is restored to 1 wound remaining with no flesh wounds"},
-            "specialists": ["Leader", "Comms", "Veteran"]
+            "specialists": ["Leader", "Comms", "Veteran"],
+            "pts": 12
         },
         {
             "army": "Necrons",
@@ -42,7 +56,8 @@
             "max": "-",
             "weapons": {"Primary":["Gauss Blaster", "Tesla Carbine"]},
             "abilities": {"Reanimation Protocols": "When an Injury roll is made for this model, on an unmodified roll of a 6 the model is not taken out of action and does not suffer a flesh wound. Instead it is restored to 1 wound remaining with no flesh wounds"},
-            "specialists": ["Leader", "Comms", "Veteran", "Zealot"]
+            "specialists": ["Leader", "Comms", "Veteran", "Zealot"],
+            "pts": 16
         },
         {
             "army": "Necrons",
@@ -59,7 +74,8 @@
             "max": "-",
             "weapons": {"Primary": ["Flayer Claws"]},
             "abilities": {"Reanimation Protocols": "When an Injury roll is made for this model, on an unmodified roll of a 6 the model is not taken out of action and does not suffer a flesh wound. Instead it is restored to 1 wound remaining with no flesh wounds"},
-            "specialists": ["Leader", "Comms", "Veteran", "Zealot"]
+            "specialists": ["Leader", "Comms", "Veteran", "Zealot"],
+            "pts": 10
         },
         {
             "army": "Necrons",
@@ -76,7 +92,8 @@
             "max": "-",
             "weapons": {"Primary": ["Synaptic Disintegrator"]},
             "abilities": {"Reanimation Protocols": "When an Injury roll is made for this model, on an unmodified roll of a 6 the model is not taken out of action and does not suffer a flesh wound. Instead it is restored to 1 wound remaining with no flesh wounds"},
-            "specialists": ["Leader", "Comms", "Scout", "Sniper", "Veteran"]
+            "specialists": ["Leader", "Comms", "Scout", "Sniper", "Veteran"],
+            "pts": 15
         }
     ]
 }
