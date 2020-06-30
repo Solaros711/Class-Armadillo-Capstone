@@ -19,16 +19,15 @@ class Specialist(models.Model):
     name = models.CharField(max_length=50)
 
 class Weapon(models.Model):
-    army = models.ForeignKey(Army, on_delete=models.SET_NULL, null=True) 
+    army = models.ForeignKey(Army, on_delete=models.PROTECT) 
     name = models.CharField(max_length=50)
-    weapon_range = models.IntegerField()
+    weapon_range = models.CharField(max_length=50)
     weapon_type = models.CharField(max_length=50)
-    s = models.IntegerField()
+    s = models.CharField(max_length=50)
     ap = models.IntegerField()
     d = models.IntegerField()
     abilities = models.CharField(max_length=1000)
     pts = models.IntegerField()
-    position = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
@@ -47,7 +46,7 @@ class SpecialistList(models.Model):
 
 
 class Unit(models.Model):
-    army = models.ForeignKey(Army, on_delete=models.SET_NULL, null=True)
+    army = models.ForeignKey(Army, on_delete=models.PROTECT)
     name = models.CharField(max_length=50)
     m = models.IntegerField()
     ws = models.IntegerField()
@@ -59,9 +58,9 @@ class Unit(models.Model):
     ld = models.IntegerField()
     sv = models.IntegerField()
     max_units = models.CharField(max_length=50)
-    weapons_list = models.ForeignKey(WeaponList, on_delete=models.SET_NULL, null=True)
-    ability_list = models.ForeignKey(AbilityList, on_delete=models.SET_NULL, null=True)
-    specialist_list = models.ForeignKey(SpecialistList, on_delete=models.SET_NULL, null=True)
+    weapons_list = models.ForeignKey(WeaponList, on_delete=models.PROTECT)
+    ability_list = models.ForeignKey(AbilityList, on_delete=models.PROTECT)
+    specialist_list = models.ForeignKey(SpecialistList, on_delete=models.PROTECT)
     point_value = models.IntegerField()
 
     def __str__(self):

@@ -17,6 +17,13 @@ def load_specialist(specialist):
         new_specialist.save()
     print(all_specialist)
 
+def load_weapons(weapon):
+    all_weapons = Weapon.objects.all()
+    if not Weapon.objects.filter(name=weapon['name']):
+        new_weapon = Weapon(army=Army(), name=weapon['name'], weapon_range=weapon['range'], weapon_type=weapon['type'], s=weapon['s'], ap=weapon['ap'], d=weapon['d'], abilities=weapon['abilities'], pts=weapon['pts'])
+        new_weapon.army = Army.objects.get(name=weapon['army'])
+        new_weapon.save()
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
         with open('ktGuide/management/commands/armies.json', 'r') as file:
@@ -27,4 +34,6 @@ class Command(BaseCommand):
             load_army(data['army'][i])
         for i in range(len(data['specialists'])):
             load_specialist(data['specialists'][i])
+        for i in range(len(data['weapons'])):
+            load_weapons(data['weapons'][i])
         
