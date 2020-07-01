@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class Army(models.Model):
     name = models.CharField(max_length=50)
@@ -52,3 +52,34 @@ class Unit(models.Model):
 
     def __str__(self):
         return self.name
+
+class User(AbstractUser):
+    email = models.EmailField(
+        verbose_name='email address',
+        max_length=100,
+        unique=True
+    )
+    name = models.CharField(max_length=26, unique=True)
+    admin = models.BooleanField(default=False)
+    bio = models.CharField(max_length=800, default="Bio goes here")
+
+    @property
+    def is_admin(self):
+        return self.admin
+
+class Guide(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    army = models.ForeignKey(Army, on_delete=models.CASCADE)
+    units = models.ManyToManyField(Unit, related_name='units')
+    weapons = models.ManyToManyField(Weapon, related_name='weapons')
+    title = models.CharField(max_length=100)
+    guide_desc = models.CharField(max_length=10000)
+    point_value = models.IntegerField()
+    votes = models.IntegerField()
+    date_created = models.DateTimeField()
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    guide = models.ForeignKey(Guide, on_delete=models.CASCADE)
+    content = models.CharField(max_length=500)
+    date_created = models.DateTimeField()
