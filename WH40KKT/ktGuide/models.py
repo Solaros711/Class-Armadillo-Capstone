@@ -32,19 +32,6 @@ class Weapon(models.Model):
     def __str__(self):
         return self.name
 
-class AbilityList(models.Model):
-    name = models.CharField(max_length=50)
-    abilities = models.ManyToManyField(Ability, related_name='ability')
-
-class WeaponList(models.Model):
-    name = models.CharField(max_length=50)
-    weapons = models.ManyToManyField(Weapon, related_name='weapon')
-
-class SpecialistList(models.Model):
-    name = models.CharField(max_length=50)
-    specialists = models.ManyToManyField(Specialist, related_name='specialist')
-
-
 class Unit(models.Model):
     army = models.ForeignKey(Army, on_delete=models.PROTECT)
     name = models.CharField(max_length=50)
@@ -58,9 +45,9 @@ class Unit(models.Model):
     ld = models.IntegerField()
     sv = models.IntegerField()
     max_units = models.CharField(max_length=50)
-    weapons_list = models.ForeignKey(WeaponList, on_delete=models.PROTECT)
-    ability_list = models.ForeignKey(AbilityList, on_delete=models.PROTECT)
-    specialist_list = models.ForeignKey(SpecialistList, on_delete=models.PROTECT)
+    weapons_list = models.ManyToManyField(Weapon, related_name='weapon')
+    ability_list = models.ManyToManyField(Ability, related_name='ability')
+    specialist_list = models.ManyToManyField(Specialist, related_name='specialist')
     point_value = models.IntegerField()
 
     def __str__(self):

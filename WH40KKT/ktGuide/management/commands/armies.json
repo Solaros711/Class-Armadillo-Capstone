@@ -29,6 +29,12 @@
         },
         {
             "name":"Sniper"
+        },
+        {
+            "name": "Veteran"
+        },
+        {
+            "name": "Zealot"
         }
     ],
     "weapons":[
