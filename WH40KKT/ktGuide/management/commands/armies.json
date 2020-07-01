@@ -3,6 +3,10 @@
         {   
             "name": "Necrons",
             "bio": "scary bois"
+        },
+        {
+            "name": "Harlequins",
+            "bio": "clowns with guns"
         }
     ],
     "specialists":[
@@ -92,12 +96,112 @@
             "d":"1",
             "abilities":"Re-roll failed wound rolls for this weapon.",
             "pts":0
+        },
+        {
+            "army":"Harlequins",
+            "name":"Fusion Pistol",
+            "range":"6",
+            "type":"Pistol 1",
+            "s":"8",
+            "ap":"-4",
+            "d":"D6",
+            "abilities":"If the target is within half range of this weapon, roll two dice when inflicting damage with it and discard the lowest result",
+            "pts":0
+        },
+        {
+            "army":"Harlequins",
+            "name":"Neuro Disruptor",
+            "range":"12",
+            "type":"Pistol 1",
+            "s":"3",
+            "ap":"-3",
+            "d":"D3",
+            "abilities":"",
+            "pts":3
+        },
+        {
+            "army":"Harlequins",
+            "name":"Plasma Grenade",
+            "range":"6",
+            "type":"Grenade D6",
+            "s":"4",
+            "ap":"-1",
+            "d":"1",
+            "abilities":"",
+            "pts":2
+        },
+        {
+            "army":"Harlequins",
+            "name":"Shuriken Pistol",
+            "range":"12",
+            "type":"Pistol 1",
+            "s":"4",
+            "ap":"0",
+            "d":"1",
+            "abilities":"Each time you make a wound roll of 6+ for this weapon, that hit is resolved with an AP of -3",
+            "pts":0
+        },
+        {
+            "army":"Harlequins",
+            "name":"Harlequin's Blade",
+            "range":"Melee",
+            "type":"Melee",
+            "s":"User",
+            "ap":"0",
+            "d":"1",
+            "abilities":"",
+            "pts":0
+        },
+        {
+            "army":"Harlequins",
+            "name":"Harlequin's Caress",
+            "range":"Melee",
+            "type":"Melee",
+            "s":"+2",
+            "ap":"-2",
+            "d":"1",
+            "abilities":"",
+            "pts":3
+        },
+        {
+            "army":"Harlequins",
+            "name":"Harlequin's Embrace",
+            "range":"Melee",
+            "type":"Melee",
+            "s":"+1",
+            "ap":"-3",
+            "d":"1",
+            "abilities":"",
+            "pts":2
+        },
+        {
+            "army":"Harlequins",
+            "name":"Harlequin's Kiss",
+            "range":"Melee",
+            "type":"Melee",
+            "s":"+1",
+            "ap":"-1",
+            "d":"D3",
+            "abilities":"",
+            "pts":4
         }
     ],
     "abilities":[
         {
             "name":"Reanimation Protocols",
             "description":"When an Injury roll is made for this model, on an unmodified roll of a 6 the model is not taken out of action and does not suffer a flesh wound. Instead it is restored to 1 wound remaining with no flesh wounds"
+        },
+        {
+            "name": "Flip Belt",
+            "description": "This model can move across other models as if they were not there, and it can climb any distance vertically (up or down) when it moves – do not measure the distance moved in this way. In addition, it never suffers falling damage, and never falls on another model. If it would, instead place this model as close as possible to the point where it would have landed. This can bring it within 1\" of an enemy model."
+        },
+        {
+            "name": "Rising Crescendo",
+            "description": "You may roll 3D6 instead of 2D6 for this model when making a charge roll, and may choose an enemy model within 18\" of this model as the target of a charge, rather than 12\"."
+        },
+        {
+            "name": "Holo-suit",
+            "description": "This model has a 4+ invulnerable save."
         }
     ],
     "units":[
@@ -171,6 +275,24 @@
             "weapons": ["Synaptic Disintegrator"],
             "abilities": ["Reanimation Protocols"],
             "specialists": ["Leader", "Comms", "Scout", "Sniper", "Veteran"],
+            "pts": 15
+        },
+        {
+            "army": "Harlequins",
+            "name": "Player",
+            "m": "8",
+            "ws": "3",
+            "bs": "3",
+            "s": "3",
+            "t": "3",
+            "w": "1",
+            "a": "4",
+            "ld": "8",
+            "sv": "6",
+            "max": "-",
+            "weapons": ["Shuriken Pistol", "Neuro Disruptor", "Fusion Pistol", "Harlequin's Blade"],
+            "abilities": ["Flip Belt", "Rising Crescendo", "Holo-suit"],
+            "specialists": ["Leader", "Combat", "Medic", "Scout", "Veteran", "Zealot"],
             "pts": 15
         }
     ]

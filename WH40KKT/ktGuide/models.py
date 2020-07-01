@@ -24,8 +24,8 @@ class Weapon(models.Model):
     weapon_range = models.CharField(max_length=50)
     weapon_type = models.CharField(max_length=50)
     s = models.CharField(max_length=50)
-    ap = models.IntegerField()
-    d = models.IntegerField()
+    ap = models.CharField(max_length=50)
+    d = models.CharField(max_length=50)
     abilities = models.CharField(max_length=1000)
     pts = models.IntegerField()
 
