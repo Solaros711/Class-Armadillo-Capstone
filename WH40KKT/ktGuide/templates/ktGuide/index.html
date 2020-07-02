@@ -15,7 +15,10 @@
 
 <body id="body">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a href="#">Kill Team Guides image goes here</a>
+        <a href="#" id="logo">
+            {% load static %}
+            <img  src="{% static 'ktGuide/KTG.png' %}">
+        </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
