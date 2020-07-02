@@ -1,0 +1,32 @@
+#guide{
+    border: 1px solid black;
+    margin-bottom: 5px;
+}
+
+#vote_system{
+    margin-left: 10px;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 50px;
+}
+
+#arrow{
+    min-width: 20px;
+    max-width: 20px;
+    min-height: 20px;
+    max-height: 20px;
+}
+
+#body{
+    background-color: #1b1d1f;
+}
+
+#guide_content{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
