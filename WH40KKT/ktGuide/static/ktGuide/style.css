@@ -19,8 +19,9 @@
     max-height: 20px;
 }
 
-#body{
+body{
     background-color: #1b1d1f;
+    color: whitesmoke;
 }
 
 #guide_content{
