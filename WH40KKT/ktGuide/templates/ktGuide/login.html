@@ -12,6 +12,41 @@
     <title>Document</title>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a href="/ktGuide/index" id="logo">
+            {% load static %}
+            <img  src="{% static 'ktGuide/KTG.png' %}">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/ktGuide/index">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Make Guide</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    My Stuff
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">My Profile</a>
+                        <a class="dropdown-item" href="#">My Guide</a>
+                    </div>
+                </li>
+                <li>
+                    <a class="nav-link active" href="/ktGuide/login">Login <span class="sr-only">(current)</span></a>
+                </li>
+                <li>
+                    <a class="nav-link" href="/ktGuide/register">Register</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search Guides" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+    </nav>
     <a>Log In</a>
     <form action="{% url 'ktGuide:login_user' %}" method="POST">
         {% csrf_token %}
