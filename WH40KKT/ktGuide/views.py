@@ -18,3 +18,7 @@ def login_user(request):
 def register(request):
     context = {}
     return render(request, 'ktGuide/register.html', context)
+
+def myprofile(request):
+    context = {}
+    return render(request, 'ktGuide/myprofile.html', context)
