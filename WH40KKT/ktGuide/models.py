@@ -54,18 +54,25 @@ class Unit(models.Model):
         return self.name
 
 class User(AbstractUser):
+    username = models.CharField(max_length=26, unique=True)
     email = models.EmailField(
         verbose_name='email address',
         max_length=100,
         unique=True
     )
-    name = models.CharField(max_length=26, unique=True)
     admin = models.BooleanField(default=False)
     bio = models.CharField(max_length=800, default="Bio goes here")
 
     @property
     def is_admin(self):
         return self.admin
+
+class GuideUnit(models.Model):
+    name = models.CharField(max_length=50)
+    unit = models.ForeignKey(Unit, on_delete=models.PROTECT)
+    weapon = models.ForeignKey(Weapon, on_delete=models.PROTECT)
+    role = models.ForeignKey(Specialist, on_delete=models.PROTECT)
+
 
 class Guide(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)

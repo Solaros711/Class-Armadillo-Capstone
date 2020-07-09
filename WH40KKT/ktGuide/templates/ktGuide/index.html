@@ -49,6 +49,11 @@
             </form>
           </div>
     </nav>
+    {% if username %}
+    <div>
+        Logged in as {{username}}
+    </div>
+    {% endif %}
     <div id="guide_content">
         <!-- gonna for loop through these with Guides.objects.order_by(votes), only showing the first 20 guides -->
         <div class="media bg-dark text-white" id="guide">

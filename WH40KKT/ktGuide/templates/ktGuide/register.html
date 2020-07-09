@@ -47,5 +47,15 @@
             </form>
           </div>
     </nav>
+    
+    <form method="POST" action="">
+        <div id="register">
+            <h1>Register Account</h1>
+            {% csrf_token %}
+            {{form.as_p}}
+            <input class="btn btn-outline-success" type="submit" name="Create User">
+        </div>
+    </form>
+
 </body>
 </html>
