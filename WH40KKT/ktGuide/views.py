@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
 from .forms import CustomUserForm
 
 def index(request):
@@ -9,13 +11,27 @@ def index(request):
     }
     return render(request, 'ktGuide/index.html', context)
 
-def login(request):
-    context = {}
-    return render(request, 'ktGuide/login.html', context)
+def login_page(request):
 
-def login_user(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            print("logging in...")
+            return HttpResponseRedirect(reverse('ktGuide:index'))
+        else:
+            return render(request, 'ktGuide/login_page.html', {'message':'Username or Password is incorrect'})
     context = {}
-    return render(request, 'ktGuide/login.html', context)
+    return render(request, 'ktGuide/login_page.html', context)
+
+def logout_page(request):
+    logout(request)
+    print('logging out...')
+    return HttpResponseRedirect(reverse('ktGuide:login_page'))
 
 def register(request):
     if request.method == 'POST':

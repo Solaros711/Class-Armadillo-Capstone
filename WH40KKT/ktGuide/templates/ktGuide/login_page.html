@@ -35,7 +35,7 @@
                     </div>
                 </li>
                 <li>
-                    <a class="nav-link active" href="/ktGuide/login">Login <span class="sr-only">(current)</span></a>
+                    <a class="nav-link active" href="/ktGuide/login_page">Login <span class="sr-only">(current)</span></a>
                 </li>
                 <li>
                     <a class="nav-link" href="/ktGuide/register">Register</a>
@@ -48,7 +48,7 @@
           </div>
     </nav>
     
-    <form action="{% url 'ktGuide:login_user' %}" method="POST">
+    <form action="" method="POST">
         
         {% csrf_token %}
         <div id="register">
@@ -58,12 +58,13 @@
             {% endif %}
             <div>
                 <label>Username:</label>
-                <input type="text" placeholder="Username">
+                <input type="text" name="username" placeholder="Username">
             </div>
             <div>
                 <label>Password:</label>
-                <input type="password"  placeholder="Password">
+                <input type="password" name="password" placeholder="Password">
             </div>
+            <input class="btn btn-outline-success" type="submit" name="Login">
             <a>Don't have an account?</a>
             <a href="/ktGuide/register">Sign up here!</a>
         </div>
