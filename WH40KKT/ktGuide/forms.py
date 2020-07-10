@@ -9,25 +9,21 @@ class CustomUserForm(forms.Form):
     password_enter = forms.CharField(label='Enter Password', widget=forms.PasswordInput)
     password_confirm = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
 
-    def check_username(self):
-        username = self.cleaned_data['username'].lower()
-        check = User.objects.filter(username=username)
-        if check.count():
-            raise ValidationError('This Username already exists.')
-
-    def check_email(self):
-        email = self.cleaned_data['email'].lower()
-        check = User.objects.filter(email=email)
-        if check.count():
-            raise ValidationError('This Email already exists.')
-
-    def check_password(self):
-        password_enter = self.cleaned_data['password_enter'].lower()
-        password_confirm = self.cleaned_data['password_confirm'].lower()
+    def clean(self):
+        cd = self.cleaned_data
         
-        if password_enter != password_confirm:
-            raise ValidationError('The Password does not match.')
-        return password_confirm
+        check_username = User.objects.filter(username=cd.get('username'))
+        if check_username.count() > 0:
+            self.add_error('email', 'This username already exists!')
+
+        check_email = User.objects.filter(email=cd.get('email'))
+        if check_email.count() > 0:
+            self.add_error('email', 'This email already exists!')
+
+        if cd.get('password_enter') != cd.get('password_confirm'):
+            self.add_error('password_confirm', 'passwords do not match!')
+        return cd
+        
 
     def save(self, commit=True):
         user = User.objects.create_user(

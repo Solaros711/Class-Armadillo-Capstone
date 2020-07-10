@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CustomUserForm
 
@@ -22,6 +22,8 @@ def register(request):
         form = CustomUserForm(request.POST)
         if form.is_valid():
             form.save()
+            context = {'message':'Account created!'}
+            return render(request, 'ktGuide/login.html', context)
     else:
         form = CustomUserForm()
     context = {'form':form}
@@ -30,3 +32,11 @@ def register(request):
 def myprofile(request):
     context = {}
     return render(request, 'ktGuide/myprofile.html', context)
+
+def make_guide(request):
+    context = {}
+    return render(request, 'ktGuide/makeguide.html', context)
+
+def view_guide(request):
+    context = {}
+    return render(request, 'ktGuide/viewguide.html', context)

@@ -51,7 +51,8 @@
     </nav>
     {% if username %}
     <div>
-        Logged in as {{username}}
+        <a>Logged in as {{username}}</a>
+        <button class="btn btn-outline-danger">Logout</button>
     </div>
     {% endif %}
     <div id="guide_content">

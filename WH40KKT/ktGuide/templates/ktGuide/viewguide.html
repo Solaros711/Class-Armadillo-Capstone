@@ -48,25 +48,5 @@
           </div>
     </nav>
     
-    <form action="{% url 'ktGuide:login_user' %}" method="POST">
-        
-        {% csrf_token %}
-        <div id="register">
-            <h1>Login</h1>
-            {% if message %}
-            {{message}}
-            {% endif %}
-            <div>
-                <label>Username:</label>
-                <input type="text" placeholder="Username">
-            </div>
-            <div>
-                <label>Password:</label>
-                <input type="password"  placeholder="Password">
-            </div>
-            <a>Don't have an account?</a>
-            <a href="/ktGuide/register">Sign up here!</a>
-        </div>
-    </form>
 </body>
 </html>
