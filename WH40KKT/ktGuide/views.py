@@ -99,6 +99,19 @@ def get_unit_stuff(request):
 
     return JsonResponse({'unit': unit.id, 'weapons': weapons_json, 'specialists': specialists_json})
 
+@login_required
+def get_presentable(request):
+    unit_name = request.GET['unit_name']
+    unit_id = request.GET['unit_id']
+    unit_weapon_id = request.GET['unit_weapon_id']
+    unit_specialist_id = request.GET['unit_specialist_id']
+
+    unit = Unit.objects.get(id=unit_id).name
+    weapon = Weapon.objects.get(id=unit_weapon_id).name
+    specialist = Specialist.objects.get(id=unit_specialist_id).name
+
+    return JsonResponse({'name': unit_name, 'unit': unit, 'weapon': weapon, 'specialist':specialist})
+
 def view_guide(request):
     context = {}
     return render(request, 'ktGuide/viewguide.html', context)

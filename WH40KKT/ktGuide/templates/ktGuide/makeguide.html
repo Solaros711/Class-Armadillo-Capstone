@@ -25,7 +25,7 @@
                     <a class="nav-link" href="/ktGuide/index">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/ktGuide/makeGuide">Make Guide</a>
+                    <a class="nav-link active" href="/ktGuide/makeGuide">Make Guide<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -37,7 +37,7 @@
                     </div>
                 </li>
                 <li>
-                    <a class="nav-link active" href="/ktGuide/login_page">Login <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/ktGuide/login_page">Login</a>
                 </li>
                 <li>
                     <a class="nav-link" href="/ktGuide/register">Register</a>
@@ -56,28 +56,64 @@
           </div>
     </nav>
     <div id="app">
-        <label>Army:</label>
-        <select v-model="selected_army_id" v-on:change="getUnits" :disabled="selected_army_id != ''">
-            <option value="">Select an Army</option>
-            {% for army in army_list %}
-            <option value="{{ army.id }}">{{ army.name }}</option>
-            {% endfor %}
-        </select>
-        <label>Unit: </label>
-        <select v-model="selected_unit_id" v-on:change="getUnitStuff">
-            <option value="">Select a unit</option>
-            <option v-for="unit in units" v-bind:value="unit.id">[[ unit.name ]]</option>
-        </select>
-        <label>Weapon: </label>
-        <select v-model="selected_weapon_id">
-            <option value="">Select a Weapon</option>
-            <option v-for="weapon in weapons" v-bind:value="weapon.id">[[ weapon.name ]]</option>
-        </select>
-        <label>Specialist: </label>
-        <select v-model="selected_specialist_id">
-            <option value="">Select a Specialist</option>
-            <option v-for="specialist in specialists" v-bind:value="specialist.id">[[ specialist.name ]]</option>
-        </select>
+        <h2>Army & Title</h2>
+        <div id="guide_army">
+            <label>Army:</label>
+            <select v-model="selected_army_id" v-on:change="getUnits" :disabled="selected_army_id != ''">
+                <option value="">Select an Army</option>
+                {% for army in army_list %}
+                <option value="{{ army.id }}">{{ army.name }}</option>
+                {% endfor %}
+            </select>
+            <label>Title:</label>
+            <input type="text" v-model="guide_title">
+        </div>
+        <h2>Units</h2>
+        <div id="guide_unit_add">
+            <label>Name: </label>
+            <input type="text" v-model="selected_unit_name">
+            <label>Unit: </label>
+            <select v-model="selected_unit_id" v-on:change="getUnitStuff">
+                <option value="">Select a unit</option>
+                <option v-for="unit in units" v-bind:value="unit.id">[[ unit.name ]]</option>
+            </select>
+            <label>Weapon: </label>
+            <select v-model="selected_weapon_id">
+                <option value="">Select a Weapon</option>
+                <option v-for="weapon in weapons" v-bind:value="weapon.id">[[ weapon.name ]]</option>
+            </select>
+            <label>Specialist: </label>
+            <select v-model="selected_specialist_id">
+                <option value="">Select a Specialist</option>
+                <option v-for="specialist in specialists" v-bind:value="specialist.id">[[ specialist.name ]]</option>
+            </select>
+            <button v-on:click="addUnit">Add Unit</button>
+        </div>
+        <p v-if="message">[[message]]</p>
+        <!-- <div v-for="(unit, index) in guide_presentable">
+            <span>[[unit.name]]</span>
+            <span>[[unit.unit]]</span>
+            <span>[[unit.weapon]]</span>
+            <span>[[unit.specialist]]</span>
+            <button v-on:click="removeUnit(index)">Remove Unit</button>
+        </div> -->
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Unit Type</th>
+                <th>Weapon</th>
+                <th>Specialist</th>
+            </tr>
+            <tr v-for="(unit, index) in guide_presentable">
+                <th>[[unit.name]]</th>
+                <th>[[unit.unit]]</th>
+                <th>[[unit.weapon]]</th>
+                <th>[[unit.specialist]]</th>
+                <th><button v-on:click="removeUnit(index)">Remove Unit</button></th>
+            </tr>
+        </table>
+        <h2>Strategy</h2>
+        <textarea v-model="guide_bio"></textarea>
     </div>
     <script>
         let app = new Vue({
@@ -88,9 +124,15 @@
                 selected_unit_id: '',
                 selected_weapon_id: '',
                 selected_specialist_id: '',
+                selected_unit_name: '',
+                guide_bio: '',
+                guide_title: '',
+                message: '',
                 units: [],
                 weapons: [],
                 specialists: [],
+                guide_units: [],
+                guide_presentable: []
             },
             methods: {
                 getUnits: function() {
@@ -118,6 +160,32 @@
                         this.selected_weapon_id = '',
                         this.weapons = response.data.weapons
                     })
+                },
+                addUnit: function() {
+                    if(this.selected_unit_name.length > 50){
+                        this.message = 'The units name is too long! (Max 50 characters)'
+                    }else if(this.selected_unit_name && this.selected_unit_id && this.selected_weapon_id && this.selected_specialist_id){
+                        this.guide_units.push({'name': this.selected_unit_name, 'unit': this.selected_unit_id, 'weapon': this.selected_weapon_id, 'specialist': this.selected_specialist_id})
+                        this.message = ''
+                        axios({
+                            method: 'get',
+                            url: '{% url "ktGuide:get_presentable" %}',
+                            params:{
+                                unit_name: this.selected_unit_name,
+                                unit_id: this.selected_unit_id,
+                                unit_weapon_id: this.selected_weapon_id,
+                                unit_specialist_id: this.selected_specialist_id
+                            }
+                        }).then(response => {
+                            this.guide_presentable.push({'name': response.data.name, 'unit': response.data.unit, 'weapon': response.data.weapon, 'specialist': response.data.specialist})
+                        })
+                    }else{
+                        this.message = 'Please enter unit data into all fields!'
+                    }
+                },
+                removeUnit: function(index) {
+                    this.guide_units.splice(index, 1)
+                    this.guide_presentable.splice(index, 1)
                 }
             }
         })
