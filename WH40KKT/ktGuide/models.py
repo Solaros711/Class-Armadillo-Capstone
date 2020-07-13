@@ -67,23 +67,23 @@ class User(AbstractUser):
     def is_admin(self):
         return self.admin
 
-class GuideUnit(models.Model):
-    name = models.CharField(max_length=50)
-    unit = models.ForeignKey(Unit, on_delete=models.PROTECT)
-    weapon = models.ForeignKey(Weapon, on_delete=models.PROTECT)
-    role = models.ForeignKey(Specialist, on_delete=models.PROTECT)
-
-
 class Guide(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     army = models.ForeignKey(Army, on_delete=models.CASCADE)
     units = models.ManyToManyField(Unit, related_name='units')
     weapons = models.ManyToManyField(Weapon, related_name='weapons')
-    title = models.CharField(max_length=100)
-    guide_desc = models.CharField(max_length=10000)
-    point_value = models.IntegerField()
-    votes = models.IntegerField()
+    title = models.CharField(max_length=100, default="Title")
+    guide_desc = models.CharField(max_length=10000, default="stuff goes here")
+    point_value = models.IntegerField(default=0)
+    votes = models.IntegerField(default=0)
     date_created = models.DateTimeField()
+
+class GuideUnit(models.Model):
+    name = models.CharField(max_length=50)
+    guide = models.ForeignKey(Guide, on_delete=models.CASCADE)
+    unit = models.ForeignKey(Unit, on_delete=models.PROTECT)
+    weapon = models.ForeignKey(Weapon, on_delete=models.PROTECT)
+    role = models.ForeignKey(Specialist, on_delete=models.PROTECT)
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)

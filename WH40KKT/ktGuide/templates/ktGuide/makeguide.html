@@ -7,6 +7,8 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'ktGuide/style.css' %}">
     <title>Document</title>
@@ -23,7 +25,7 @@
                     <a class="nav-link" href="/ktGuide/index">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Make Guide</a>
+                    <a class="nav-link" href="/ktGuide/makeGuide">Make Guide</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -53,6 +55,68 @@
             </form>
           </div>
     </nav>
-    
+    <div id="app">
+        <select v-model="selected_army_id" v-on:change="getUnits" :disabled="selected_army_id != ''">
+            <option value="">Select an Army</option>
+            {% for army in army_list %}
+            <option value="{{ army.id }}">{{ army.name }}</option>
+            {% endfor %}
+        </select>
+        <select v-model="selected_unit_id" v-on:change="getUnitStuff">
+            <option value="">Select a unit</option>
+            <option v-for="unit in units" v-bind:value="unit.id">[[ unit.name ]]</option>
+        </select>
+        <select v-model="selected_weapon_id">
+            <option value="">Select a Weapon</option>
+            <option v-for="weapon in weapons" v-bind:value="weapon.id">[[ weapon.name ]]</option>
+        </select>
+        <select v-model="selected_specialist_id">
+            <option value="">Select a Specialist</option>
+            <option v-for="specialist in specialists" v-bind:value="specialist.id">[[ specialist.name ]]</option>
+        </select>
+    </div>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            delimiters: ['[[',']]'],
+            data: {
+                selected_army_id: '',
+                selected_unit_id: '',
+                selected_weapon_id: '',
+                selected_specialist_id: '',
+                units: [],
+                weapons: [],
+                specialists: [],
+            },
+            methods: {
+                getUnits: function() {
+                    axios({
+                        method: 'get',
+                        url: '{% url "ktGuide:get_units" %}',
+                        params: {
+                            army_id: this.selected_army_id
+                        }
+                    }).then(response => {
+                        this.selected_unit_id = '',
+                        this.units = response.data.units
+                    })
+                },
+                getUnitStuff: function() {
+                    axios({
+                        method: 'get',
+                        url: '{% url "ktGuide:get_unit_stuff" %}',
+                        params:{
+                            unit_id: this.selected_unit_id
+                        }
+                    }).then(response => {
+                        this.selected_specialist_id = '',
+                        this.specialists = response.data.specialists,
+                        this.selected_weapon_id = '',
+                        this.weapons = response.data.weapons
+                    })
+                }
+            }
+        })
+    </script>
 </body>
 </html>
