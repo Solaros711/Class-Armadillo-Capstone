@@ -68,7 +68,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'WH40KKT.wsgi.application'
 
-
+LOGIN_URL = '/ktGuide/login_page'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 

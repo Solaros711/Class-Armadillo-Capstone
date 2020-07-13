@@ -56,20 +56,24 @@
           </div>
     </nav>
     <div id="app">
+        <label>Army:</label>
         <select v-model="selected_army_id" v-on:change="getUnits" :disabled="selected_army_id != ''">
             <option value="">Select an Army</option>
             {% for army in army_list %}
             <option value="{{ army.id }}">{{ army.name }}</option>
             {% endfor %}
         </select>
+        <label>Unit: </label>
         <select v-model="selected_unit_id" v-on:change="getUnitStuff">
             <option value="">Select a unit</option>
             <option v-for="unit in units" v-bind:value="unit.id">[[ unit.name ]]</option>
         </select>
+        <label>Weapon: </label>
         <select v-model="selected_weapon_id">
             <option value="">Select a Weapon</option>
             <option v-for="weapon in weapons" v-bind:value="weapon.id">[[ weapon.name ]]</option>
         </select>
+        <label>Specialist: </label>
         <select v-model="selected_specialist_id">
             <option value="">Select a Specialist</option>
             <option v-for="specialist in specialists" v-bind:value="specialist.id">[[ specialist.name ]]</option>

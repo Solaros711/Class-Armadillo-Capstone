@@ -223,7 +223,7 @@
             "max": "-",
             "weapons": ["Gauss Flayer"],
             "abilities": ["Reanimation Protocols"],
-            "specialists": ["Leader", "Comms", "Veteran"],
+            "specialists": ["Leader", "None", "Comms", "Veteran"],
             "pts": 12
         },
         {
@@ -241,7 +241,7 @@
             "max": "-",
             "weapons": ["Gauss Blaster", "Tesla Carbine"],
             "abilities": ["Reanimation Protocols"],
-            "specialists": ["Leader", "Comms", "Veteran", "Zealot"],
+            "specialists": ["Leader", "Comms", "None", "Veteran", "Zealot"],
             "pts": 16
         },
         {
@@ -259,7 +259,7 @@
             "max": "-",
             "weapons": ["Flayer Claws"],
             "abilities": ["Reanimation Protocols"],
-            "specialists": ["Leader", "Comms", "Veteran", "Zealot"],
+            "specialists": ["Leader", "Comms", "None", "Veteran", "Zealot"],
             "pts": 10
         },
         {
@@ -277,7 +277,7 @@
             "max": "-",
             "weapons": ["Synaptic Disintegrator"],
             "abilities": ["Reanimation Protocols"],
-            "specialists": ["Leader", "Comms", "Scout", "Sniper", "Veteran"],
+            "specialists": ["Leader", "Comms", "None", "Scout", "Sniper", "Veteran"],
             "pts": 15
         },
         {
@@ -295,7 +295,7 @@
             "max": "-",
             "weapons": ["Shuriken Pistol", "Neuro Disruptor", "Fusion Pistol", "Harlequin's Blade"],
             "abilities": ["Flip Belt", "Rising Crescendo", "Holo-suit"],
-            "specialists": ["Leader", "Combat", "Medic", "Scout", "Veteran", "Zealot"],
+            "specialists": ["Leader", "Combat", "Medic", "None", "Scout", "Veteran", "Zealot"],
             "pts": 15
         }
     ]

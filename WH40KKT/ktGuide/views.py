@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from .forms import CustomUserForm
 from .models import Army, Unit, Weapon, Specialist, Guide, GuideUnit
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     context = {
@@ -45,16 +46,19 @@ def register(request):
     context = {'form':form}
     return render(request, 'ktGuide/register.html', context)
 
+@login_required
 def myprofile(request):
     context = {}
     return render(request, 'ktGuide/myprofile.html', context)
 
+@login_required
 def make_guide(request):
     context = {
         'army_list': Army.objects.order_by('name')
     }
     return render(request, 'ktGuide/makeguide.html', context)
 
+@login_required
 def get_units(request):
     army_id = request.GET['army_id']
     army = Army.objects.get(id=army_id)
@@ -70,6 +74,7 @@ def get_units(request):
         print(units_json)
     return JsonResponse({'army': army.id, 'units': units_json})
 
+@login_required
 def get_unit_stuff(request):
     unit_id = request.GET['unit_id']
     unit = Unit.objects.get(id=unit_id)
