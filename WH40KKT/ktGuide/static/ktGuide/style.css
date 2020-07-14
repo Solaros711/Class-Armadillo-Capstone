@@ -51,3 +51,13 @@ textarea{
     margin-top: 20px;
     margin-left: 20px;
 }
+
+.title{
+    color: whitesmoke;
+    font-weight: 500; 
+    font-size: 24px;
+}
+
+h4{
+    color: whitesmoke;
+}

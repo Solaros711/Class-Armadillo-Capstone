@@ -193,12 +193,14 @@
                         axios({
                             method: 'post',
                             url: '{% url "ktGuide:submit_guide" %}',
-                            params: {
+                            data: {
                                 army: this.selected_army_id,
                                 title: this.guide_title,
                                 units: this.guide_units,
                                 text: this.guide_bio
                             },
+                        }).then(response => {
+                            console.log(response.data)
                         })
                     }
                 }

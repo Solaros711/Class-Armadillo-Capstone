@@ -8,6 +8,8 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'ktGuide/style.css' %}">
     <title>Document</title>
@@ -56,48 +58,37 @@
         </div>
         
     </nav>
-    
+    {% if list_of_guides %}
     <div id="guide_content">
-        <!-- gonna for loop through these with Guides.objects.order_by(votes), only showing the first 20 guides -->
+        {% for guide in list_of_guides %}
         <div class="media bg-dark text-white" id="guide">
-            <!-- pulls info from each guide -->
             <a class="pull-left" href="#">
-                <!-- will load image of guide from guide.army.name -->
+                {% if guide.army.name == 'Necrons' %}
                 {% load static %}
                 <img src="{% static 'ktGuide/necronImage.png' %}" alt="Necron Icon">
+                {% elif guide.army.name == 'Harlequins' %}
+                {% load static %}
+                <img src="{% static 'ktGuide/harlequinImage.png' %}" alt="Harlequin Icon">
+                {% endif %}
             </a>
             <div id="vote_system">
                 {% load static %}
-                <img id="arrow" src="{% static 'ktGuide/arrowUp.png' %}" alt="">
-                <a>12111</a>
+                <img id="arrow" src="{% static 'ktGuide/arrowUp.png' %}" alt="ArrowUp">
+                <a>{{guide.votes}}</a>
                 {% load static %}
-                <img id="arrow" src="{% static 'ktGuide/arrowDown.png' %}" alt="">
+                <img id="arrow" src="{% static 'ktGuide/arrowDown.png' %}" alt="ArrowDown">
             </div>
             <div class="media-body">
-                <h4 class="media-heading">Necron Lords of the Most valuable Empire!{{ guide.title }}</h4>
-                500{{ guide.pts }} MADE BY ME{{ guide.author }}
+                <div>
+                    <a href="/ktGuide/view_guide/{{ guide.id }}" class="title">{{ guide.title }}</a>
+                </div>
+                <p style="margin-bottom: auto;">{{ guide.point_value }} points | Author: {{ guide.author.username }}</p>
             </div>
         </div>
-        <div class="media bg-dark text-white" id="guide">
-            <!-- pulls info from each guide -->
-            <a class="pull-left" href="#">
-                <!-- will load image of guide from guide.army.name -->
-                {% load static %}
-                <img src="{% static 'ktGuide/harlequinImage.png' %}" alt="Necron Icon">
-            </a>
-            <div id="vote_system">
-                {% load static %}
-                <img id="arrow" src="{% static 'ktGuide/arrowUp.png' %}" alt="">
-                <a>596</a>
-                {% load static %}
-                <img id="arrow" src="{% static 'ktGuide/arrowDown.png' %}" alt="">
-            </div>
-            <div class="media-body">
-                <h4 class="media-heading">TITLE{{ guide.title }}</h4>
-                500{{ guide.pts }} MADE BY ME{{ guide.author }}
-            </div>
-        </div>
+        {% endfor %}
     </div>
+    {% else %}
+    <a href="">Could not find any guides!</a>
+    {% endif %}
 </body>
-
 </html>

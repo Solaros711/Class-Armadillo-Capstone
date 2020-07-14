@@ -6,13 +6,20 @@ from django.urls import reverse
 from .forms import CustomUserForm
 from .models import Army, Unit, Weapon, Specialist, Guide, GuideUnit
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.template import loader
 import datetime
+import json
 
 def index(request):
+    page = request.GET.get('page',1)
+    list_of_guides = Guide.objects.order_by('title')
+    template = loader.get_template('ktGuide/index.html')
+    paginator = Paginator(list_of_guides, 20)
     context = {
-        'message': 'CHAD'
+        'list_of_guides': list_of_guides
     }
-    return render(request, 'ktGuide/index.html', context)
+    return HttpResponse(template.render(context, request))
 
 def login_page(request):
     if request.method == 'POST':
@@ -115,17 +122,29 @@ def get_presentable(request):
 
 @login_required
 def submit_guide(request):
-    # author = 
-    # date = datetime.datetime.now()
-    print(request.GET)
-    print(request.GET['army'])
-    print(request.GET['title'])
-    print(request.GET['units[]'])
-    print(request.GET['text'])
+    data = json.loads(request.body)
+    print(data)
+    date = datetime.datetime.now()
+    army_id = data['army']
+    title = data['title']
+    text = data['text']
+
+    guide = Guide(author=request.user, army=Army.objects.get(id=army_id), title=title, guide_desc=text, date_created=date)
+    guide.save()
+    print(guide)
+    for unit in data['units']:
+        guide_unit = GuideUnit(name=unit['name'], guide=guide, unit=Unit.objects.get(id=int(unit['unit'])), weapon=Weapon.objects.get(id=int(unit['weapon'])), role=Specialist.objects.get(id=int(unit['specialist'])))
+        guide_unit.save()
+        print(guide_unit)
+
     context = {}
     return HttpResponseRedirect(reverse('ktGuide:login_page'))
 
 
-def view_guide(request):
-    context = {}
-    return render(request, 'ktGuide/viewguide.html', context)
+def view_guide(request, guide_id):
+    guide = Guide.objects.get(id=guide_id)
+    template = loader.get_template('ktGuide/viewguide.html')
+    context = {
+        'guide': guide
+    }
+    return HttpResponse(template.render(context, request))
