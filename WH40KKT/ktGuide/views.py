@@ -6,6 +6,7 @@ from django.urls import reverse
 from .forms import CustomUserForm
 from .models import Army, Unit, Weapon, Specialist, Guide, GuideUnit
 from django.contrib.auth.decorators import login_required
+import datetime
 
 def index(request):
     context = {
@@ -111,6 +112,19 @@ def get_presentable(request):
     specialist = Specialist.objects.get(id=unit_specialist_id).name
 
     return JsonResponse({'name': unit_name, 'unit': unit, 'weapon': weapon, 'specialist':specialist})
+
+@login_required
+def submit_guide(request):
+    # author = 
+    # date = datetime.datetime.now()
+    print(request.GET)
+    print(request.GET['army'])
+    print(request.GET['title'])
+    print(request.GET['units[]'])
+    print(request.GET['text'])
+    context = {}
+    return HttpResponseRedirect(reverse('ktGuide:login_page'))
+
 
 def view_guide(request):
     context = {}

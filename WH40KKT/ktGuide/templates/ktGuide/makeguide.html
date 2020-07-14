@@ -75,7 +75,7 @@
             <label>Unit: </label>
             <select v-model="selected_unit_id" v-on:change="getUnitStuff">
                 <option value="">Select a unit</option>
-                <option v-for="unit in units" v-bind:value="unit.id">[[ unit.name ]]</option>
+                <option v-for="unit in display_units" v-bind:value="unit.id">[[ unit.name ]]</option>
             </select>
             <label>Weapon: </label>
             <select v-model="selected_weapon_id">
@@ -90,13 +90,6 @@
             <button v-on:click="addUnit">Add Unit</button>
         </div>
         <p v-if="message">[[message]]</p>
-        <!-- <div v-for="(unit, index) in guide_presentable">
-            <span>[[unit.name]]</span>
-            <span>[[unit.unit]]</span>
-            <span>[[unit.weapon]]</span>
-            <span>[[unit.specialist]]</span>
-            <button v-on:click="removeUnit(index)">Remove Unit</button>
-        </div> -->
         <table>
             <tr>
                 <th>Name</th>
@@ -114,8 +107,11 @@
         </table>
         <h2>Strategy</h2>
         <textarea v-model="guide_bio"></textarea>
+        <button v-on:click="submitGuide">Submit</button>
     </div>
     <script>
+        axios.defaults.xsrfCookieName = 'csrftoken'
+        axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
         let app = new Vue({
             el: '#app',
             delimiters: ['[[',']]'],
@@ -128,7 +124,7 @@
                 guide_bio: '',
                 guide_title: '',
                 message: '',
-                units: [],
+                display_units: [],
                 weapons: [],
                 specialists: [],
                 guide_units: [],
@@ -144,7 +140,7 @@
                         }
                     }).then(response => {
                         this.selected_unit_id = '',
-                        this.units = response.data.units
+                        this.display_units = response.data.units
                     })
                 },
                 getUnitStuff: function() {
@@ -186,6 +182,25 @@
                 removeUnit: function(index) {
                     this.guide_units.splice(index, 1)
                     this.guide_presentable.splice(index, 1)
+                },
+                submitGuide: function() {
+                    if(this.guide_bio.length > 10000)
+                    {
+                        this.message = 'The guide length is too long! (Max 10000 Characters!)'
+                    }
+                    else{
+                        this.message = ''
+                        axios({
+                            method: 'post',
+                            url: '{% url "ktGuide:submit_guide" %}',
+                            params: {
+                                army: this.selected_army_id,
+                                title: this.guide_title,
+                                units: this.guide_units,
+                                text: this.guide_bio
+                            },
+                        })
+                    }
                 }
             }
         })
