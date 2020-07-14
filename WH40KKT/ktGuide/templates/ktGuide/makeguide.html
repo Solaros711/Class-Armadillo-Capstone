@@ -111,7 +111,7 @@
     </div>
     <script>
         axios.defaults.xsrfCookieName = 'csrftoken'
-        axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
+        axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
         let app = new Vue({
             el: '#app',
             delimiters: ['[[',']]'],
@@ -200,7 +200,20 @@
                                 text: this.guide_bio
                             },
                         }).then(response => {
-                            console.log(response.data)
+                            this.selected_army_id= '',
+                            this.selected_unit_id= '',
+                            this.selected_weapon_id= '',
+                            this.selected_specialist_id= '',
+                            this.selected_unit_name= '',
+                            this.guide_bio= '',
+                            this.guide_title= '',
+                            this.message= '',
+                            this.display_units= [],
+                            this.weapons= [],
+                            this.specialists= [],
+                            this.guide_units= [],
+                            this.guide_presentable= []
+                            window.location = "/ktGuide/view_guide/" + response.data
                         })
                     }
                 }

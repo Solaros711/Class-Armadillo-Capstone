@@ -13,5 +13,6 @@ urlpatterns = [
     path('get_units/', views.get_units, name='get_units'),
     path('get_unit_stuff/', views.get_unit_stuff, name='get_unit_stuff'),
     path('get_presentable/', views.get_presentable, name='get_presentable'),
-    path('submit_guide/', views.submit_guide, name='submit_guide')
+    path('submit_guide/', views.submit_guide, name='submit_guide'),
+    path('submit_comment/', views.submit_comment, name='submit_comment')
 ]

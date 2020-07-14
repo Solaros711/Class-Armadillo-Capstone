@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from .forms import CustomUserForm
-from .models import Army, Unit, Weapon, Specialist, Guide, GuideUnit
+from .models import Army, Unit, Weapon, Specialist, Guide, GuideUnit, Comment
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.template import loader
@@ -13,13 +13,20 @@ import json
 
 def index(request):
     page = request.GET.get('page',1)
-    list_of_guides = Guide.objects.order_by('title')
     template = loader.get_template('ktGuide/index.html')
-    paginator = Paginator(list_of_guides, 20)
-    context = {
-        'list_of_guides': list_of_guides
-    }
-    return HttpResponse(template.render(context, request))
+    if Guide.objects.count():
+        list_of_guides = Guide.objects.order_by('title')
+        paginator = Paginator(list_of_guides, 20)
+        context = {
+            'list_of_guides': list_of_guides
+        }
+        return HttpResponse(template.render(context, request))
+    else:
+        context = {
+            'message': 'There are no guides to view!'
+        }
+        return HttpResponse(template.render(context, request))
+    
 
 def login_page(request):
     if request.method == 'POST':
@@ -123,28 +130,42 @@ def get_presentable(request):
 @login_required
 def submit_guide(request):
     data = json.loads(request.body)
-    print(data)
     date = datetime.datetime.now()
+
     army_id = data['army']
     title = data['title']
     text = data['text']
 
     guide = Guide(author=request.user, army=Army.objects.get(id=army_id), title=title, guide_desc=text, date_created=date)
     guide.save()
-    print(guide)
+
     for unit in data['units']:
         guide_unit = GuideUnit(name=unit['name'], guide=guide, unit=Unit.objects.get(id=int(unit['unit'])), weapon=Weapon.objects.get(id=int(unit['weapon'])), role=Specialist.objects.get(id=int(unit['specialist'])))
         guide_unit.save()
-        print(guide_unit)
 
-    context = {}
-    return HttpResponseRedirect(reverse('ktGuide:login_page'))
+    return HttpResponse(guide.id)
+
+@login_required
+def submit_comment(request):
+    data = json.loads(request.body)
+    author = request.user
+    date = datetime.datetime.now()
+    comment_text = data['comment']
+    guide = Guide.objects.get(id=data['id'])
+    
+    comment = Comment(author=author, guide=guide, content=comment_text, date_created=date)
+    comment.save()
+
+    return HttpResponse(guide.id)
 
 
 def view_guide(request, guide_id):
     guide = Guide.objects.get(id=guide_id)
+    list_of_comments = Comment.objects.filter(guide=guide_id)
+    list_of_comments = list_of_comments.order_by('date_created')
     template = loader.get_template('ktGuide/viewguide.html')
     context = {
-        'guide': guide
+        'guide': guide,
+        'list_of_comments': list_of_comments
     }
     return HttpResponse(template.render(context, request))

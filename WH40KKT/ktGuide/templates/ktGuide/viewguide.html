@@ -7,6 +7,8 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'ktGuide/style.css' %}">
     <title>Document</title>
@@ -54,5 +56,42 @@
           </div>
     </nav>
     {{ guide.title }}
+    {% for comment in list_of_comments %}
+    <div>
+        {{ comment.content }}
+    </div>
+    {% endfor %}
+    <div id="app">
+        <h4>Send a comment!</h4>
+        <input v-model="guide_id" type="hidden">
+        <textarea v-model="text"></textarea>
+        <button v-on:click="makeComment">Submit Comment</button>
+    </div>
+    <script>
+        axios.defaults.xsrfCookieName = 'csrftoken'
+        axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
+        let app = new Vue({
+            el: '#app',
+            data: {
+                text: '',
+                guide_id: '{{ guide.id }}'
+            },
+            methods: {
+                makeComment: function(guide_id){
+                    axios({
+                        method: 'post',
+                        url: '{% url "ktGuide:submit_comment" %}',
+                        data: {
+                            comment: this.text,
+                            id: this.guide_id
+                        },
+                    }).then(response =>{
+                        this.text = ''
+                        window.location.reload()
+                    })
+                }
+            }
+        })
+    </script>
 </body>
 </html>
