@@ -61,3 +61,8 @@ textarea{
 h4{
     color: whitesmoke;
 }
+
+.points_author{
+    margin-bottom: auto;
+    color: #a8a8a8 !important;
+}

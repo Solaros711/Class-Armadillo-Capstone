@@ -82,7 +82,7 @@
                 <div>
                     <a href="/ktGuide/view_guide/{{ guide.id }}" class="title">{{ guide.title }}</a>
                 </div>
-                <p style="margin-bottom: auto;">{{ guide.point_value }} points | Author: {{ guide.author.username }}</p>
+                <a class="points_author">{{ guide.point_value }} points | Author: {{ guide.author.username }}</a>
             </div>
         </div>
         {% endfor %}
