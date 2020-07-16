@@ -11,7 +11,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'ktGuide/style.css' %}">
-    <title>Document</title>
+    {% load static %}
+    <link rel="shortcut icon" type="img" href="{% static 'ktGuide/skull_favicon.png' %}">
+    <title>View Guide</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -37,7 +39,7 @@
                     </div>
                 </li>
                 <li>
-                    <a class="nav-link active" href="/ktGuide/login_page">Login <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/ktGuide/login_page">Login</a>
                 </li>
                 <li>
                     <a class="nav-link" href="/ktGuide/register">Register</a>
@@ -46,19 +48,116 @@
             {% if request.user.is_authenticated %}
             <div>
                 <a>Logged in as {{request.user}}</a>
-                <a class="btn btn-outline-danger" href="/ktGuide/logout_page">Logout</a>
+                <a class="btn btn-danger" href="/ktGuide/logout_page">Logout</a>
             </div>
             {% endif %}
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search Guides" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-success" type="submit">Search</button>
             </form>
           </div>
     </nav>
-    {{ guide.title }}
-    {% for comment in list_of_comments %}
+    <div id="guide_content">
+        <div class="header_v_guide">
+            <div>
+                {% if guide.army.name == 'Necrons' %}
+                    {% load static %}
+                    <img src="{% static 'ktGuide/necronImage.png' %}" alt="Necron Icon">
+                    {% elif guide.army.name == 'Harlequins' %}
+                    {% load static %}
+                    <img src="{% static 'ktGuide/harlequinImage.png' %}" alt="Harlequin Icon">
+                {% endif %}
+                <a class="title_v_guide">{{ guide.title }}</a>
+            </div>
+            <div>
+                <a>{{ guide.point_value }} points | Author: {{ guide.author.username }} | Date Created: {{ guide.date_created }}</a>
+            </div>
+        </div>
+        <div class="table-responseive">
+        <table>
+            <tr>
+                <th scope="row" class="section-odd">Name</th>
+                <td class="section-even">Unit</td>
+                <td class="section-odd">M</td>
+                <td class="section-even">WS</td>
+                <td class="section-odd">BS</td>
+                <td class="section-even">S</td>
+                <td class="section-odd">T</td>
+                <td class="section-even">W</td>
+                <td class="section-odd">A</td>
+                <td class="section-even">Ld</td>
+                <td class="section-odd">Sv</td>
+                <td class="section-even">Max</td>
+                <td class="section-odd">Role</td>
+                <td class="section-even">Weapon</td>
+                <td class="section-odd">Points</td>
+            
+            </tr>
+            {% for unit in list_of_units %}
+            <tr>
+                <th scope="row" class="section-odd">{{unit.name}}</th>
+                <td class="section-even">{{unit.unit}}</td>
+                <td class="section-odd">{{unit.unit.m}}</td>
+                <td class="section-even">{{unit.unit.ws}}</td>
+                <td class="section-odd">{{unit.unit.bs}}</td>
+                <td class="section-even">{{unit.unit.s}}</td>
+                <td class="section-odd">{{unit.unit.t}}</td>
+                <td class="section-even">{{unit.unit.w}}</td>
+                <td class="section-odd">{{unit.unit.a}}</td>
+                <td class="section-even">{{unit.unit.ld}}</td>
+                <td class="section-odd">{{unit.unit.sv}}</td>
+                <td class="section-even">{{unit.unit.max_units}}</td>
+                <td class="section-odd">{{unit.role}}</td>
+                <td class="section-even">{{unit.weapon}}</td>
+                <td class="section-odd">{{unit.unit.point_value}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="table-responseive">
+        <table>
+            <tr>
+                <th scope="row" class="section-odd">Name</th>
+                <td class="section-even">Range</td>
+                <td class="section-odd">Type</td>
+                <td class="section-even">S</td>
+                <td class="section-odd">AP</td>
+                <td class="section-even">D</td>
+                <td class="section-odd">Abilities</td>
+                <td class="section-even">Points</td>
+            
+            </tr>
+            {% for unit in list_of_units %}
+            <tr>
+                <th scope="row" class="section-odd">{{unit.weapon}}</th>
+                <td class="section-even">{{unit.weapon.weapon_range}}</td>
+                <td class="section-odd">{{unit.weapon.weapon_type}}</td>
+                <td class="section-even">{{unit.weapon.s}}</td>
+                <td class="section-odd">{{unit.weapon.ap}}</td>
+                <td class="section-even">{{unit.weapon.d}}</td>
+                <td class="section-odd">{{unit.weapon.abilities}}</td>
+                <td class="section-even">{{unit.weapon.pts}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="guide_text">
+        {{guide.guide_desc}}
+    </div>
+    </div>
+    
+    
     <div>
-        {{ comment.content }}
+        <h3 class="comment_header">Comments</h3>
+        {% for comment in list_of_comments %}
+        <div class="comment">
+            <h5 class="comment_author">{{ comment.author }}</h5>
+            <hr>
+            <div class="comment_content">
+                {{ comment.content }}
+            </div>
+            <a class="comment_date">{{ comment.date_created }}</a>
+        </div>
     </div>
     {% endfor %}
     <div id="app">

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,15 +7,12 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'ktGuide/style.css' %}">
     {% load static %}
     <link rel="shortcut icon" type="img" href="{% static 'ktGuide/skull_favicon.png' %}">
-    <title>KT Guide</title>
+    <title>404</title>
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a href="/ktGuide/index" id="logo">
@@ -25,8 +21,8 @@
         </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/ktGuide/index">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ktGuide/index">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/ktGuide/makeGuide">Make Guide</a>
@@ -57,40 +53,10 @@
                 <input class="form-control mr-sm-2" type="search" placeholder="Search Guides" aria-label="Search">
                 <button class="btn btn-success" type="submit">Search</button>
             </form>
-        </div>
-        
+          </div>
     </nav>
-    {% if list_of_guides %}
-    <div id="guide_content">
-        {% for guide in list_of_guides %}
-        <div class="media bg-dark text-white" id="guide">
-            <a class="pull-left" href="#">
-                {% if guide.army.name == 'Necrons' %}
-                {% load static %}
-                <img src="{% static 'ktGuide/necronImage.png' %}" alt="Necron Icon">
-                {% elif guide.army.name == 'Harlequins' %}
-                {% load static %}
-                <img src="{% static 'ktGuide/harlequinImage.png' %}" alt="Harlequin Icon">
-                {% endif %}
-            </a>
-            <div id="vote_system">
-                {% load static %}
-                <img id="arrow" src="{% static 'ktGuide/arrowUp.png' %}" alt="ArrowUp">
-                <a>{{guide.votes}}</a>
-                {% load static %}
-                <img id="arrow" src="{% static 'ktGuide/arrowDown.png' %}" alt="ArrowDown">
-            </div>
-            <div class="media-body">
-                <div>
-                    <a href="/ktGuide/view_guide/{{ guide.id }}" class="title">{{ guide.title }}</a>
-                </div>
-                <a class="points_author">{{ guide.point_value }} points | Author: {{ guide.author.username }}</a>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-    {% else %}
-    <a>{{ message }}</a>
-    {% endif %}
 </body>
+<h1>404 - Page Not Found</h1>
+
+<p>This page does not exist!</p>
 </html>

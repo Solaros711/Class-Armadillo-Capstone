@@ -11,7 +11,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'ktGuide/style.css' %}">
-    <title>Document</title>
+    {% load static %}
+    <link rel="shortcut icon" type="img" href="{% static 'ktGuide/skull_favicon.png' %}">
+    <title>Make Guide</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -46,12 +48,12 @@
             {% if request.user.is_authenticated %}
             <div>
                 <a>Logged in as {{request.user}}</a>
-                <a class="btn btn-outline-danger" href="/ktGuide/logout_page">Logout</a>
+                <a class="btn btn-danger" href="/ktGuide/logout_page">Logout</a>
             </div>
             {% endif %}
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search Guides" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-success" type="submit">Search</button>
             </form>
           </div>
     </nav>
@@ -87,24 +89,26 @@
                 <option value="">Select a Specialist</option>
                 <option v-for="specialist in specialists" v-bind:value="specialist.id">[[ specialist.name ]]</option>
             </select>
-            <button v-on:click="addUnit">Add Unit</button>
+            <button v-on:click="addUnit" class="btn btn-success">Add Unit</button>
         </div>
         <p v-if="message">[[message]]</p>
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Unit Type</th>
-                <th>Weapon</th>
-                <th>Specialist</th>
-            </tr>
-            <tr v-for="(unit, index) in guide_presentable">
-                <th>[[unit.name]]</th>
-                <th>[[unit.unit]]</th>
-                <th>[[unit.weapon]]</th>
-                <th>[[unit.specialist]]</th>
-                <th><button v-on:click="removeUnit(index)">Remove Unit</button></th>
-            </tr>
-        </table>
+        <div class="table-responseive">
+            <table>
+                <tr>
+                    <th scope="row" class="section-odd">Name</th>
+                    <td class="section-even">Unit Type</td>
+                    <td class="section-odd">Weapon</td>
+                    <td class="section-even">Specialist</td>
+                </tr>
+                <tr v-for="(unit, index) in guide_presentable">
+                    <th scope="row" class="section-odd">[[unit.name]]</th>
+                    <td class="section-even">[[unit.unit]]</td>
+                    <td class="section-odd">[[unit.weapon]]</td>
+                    <td class="section-even">[[unit.specialist]]</td>
+                    <td><button v-on:click="removeUnit(index)" class="btn btn-danger">Remove Unit</button></td>
+                </tr>
+            </table>
+        </div>
         <h2>Strategy</h2>
         <textarea v-model="guide_bio"></textarea>
         <button v-on:click="submitGuide">Submit</button>

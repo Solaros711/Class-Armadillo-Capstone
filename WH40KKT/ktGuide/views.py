@@ -135,7 +135,14 @@ def submit_guide(request):
     title = data['title']
     text = data['text']
 
-    guide = Guide(author=request.user, army=Army.objects.get(id=army_id), title=title, guide_desc=text, date_created=date)
+    pts = 0
+
+    for unit in data['units']:
+        uni_pts = Unit.objects.get(id=int(unit['unit']))
+        wep_pts = Weapon.objects.get(id=int(unit['weapon']))
+        pts += uni_pts.point_value + wep_pts.pts
+
+    guide = Guide(author=request.user, army=Army.objects.get(id=army_id), title=title, guide_desc=text, point_value=pts, date_created=date)
     guide.save()
 
     for unit in data['units']:
@@ -159,12 +166,21 @@ def submit_comment(request):
 
 
 def view_guide(request, guide_id):
-    guide = Guide.objects.get(id=guide_id)
+    guide = ''
+    try:
+        guide = Guide.objects.get(id=guide_id)
+    except Guide.DoesNotExist:
+        template = loader.get_template('ktGuide/404.html')
+        return HttpResponse(template.render({}, request))
+
     list_of_comments = Comment.objects.filter(guide=guide_id)
+    list_of_units = GuideUnit.objects.filter(guide=guide_id)
     list_of_comments = list_of_comments.order_by('date_created')
+    list_of_units = list_of_units.order_by('name')
     template = loader.get_template('ktGuide/viewguide.html')
     context = {
         'guide': guide,
-        'list_of_comments': list_of_comments
+        'list_of_comments': list_of_comments,
+        'list_of_units': list_of_units,
     }
     return HttpResponse(template.render(context, request))

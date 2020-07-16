@@ -18,6 +18,9 @@ class Ability(models.Model):
 class Specialist(models.Model):
     name = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.name
+
 class Weapon(models.Model):
     army = models.ForeignKey(Army, on_delete=models.PROTECT) 
     name = models.CharField(max_length=50)

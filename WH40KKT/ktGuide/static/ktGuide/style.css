@@ -43,8 +43,8 @@ body{
 }
 
 textarea{
-    width: 500px;
-    height: 300px;
+    width: 600px;
+    height: 200px;
 }
 
 #app{
@@ -64,5 +64,67 @@ h4{
 
 .points_author{
     margin-bottom: auto;
+    color: #a8a8a8 !important;
+}
+
+.title_v_guide{
+    margin-left: 20px;
+    font-weight: 500; 
+    font-size: 24px;
+}
+
+.section-odd{
+    border: 1px solid black !important;
+    background-color: #424242;
+}
+
+.section-even{
+    border: 1px solid black !important;
+    background-color: #595959;
+}
+
+td{
+    padding: 5px;
+}
+
+th{
+    padding: 5px;
+}
+
+table{
+    margin-top: 20px;
+}
+
+.guide_text{
+    margin-top: 20px;
+    width: 600px;
+}
+
+.comment{
+    border: 1px solid black !important;
+    background-color: #424242;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 20px;
+}
+
+.comment_header{
+    margin-top: 20px;
+    margin-left: 40px;
+}
+
+.comment_author{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.comment_content{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.comment_date{
+    margin-top: 10px;
+    margin-left: 10px;
     color: #a8a8a8 !important;
 }
