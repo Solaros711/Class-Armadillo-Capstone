@@ -41,7 +41,8 @@ def login_page(request):
         else:
             return render(request, 'ktGuide/login_page.html', {'message':'Username or Password is incorrect'})
     context = {}
-    return render(request, 'ktGuide/login_page.html', context)
+    template = loader.get_template('ktGuide/login_page.html')
+    return HttpResponse(template.render(context, request))
 
 def logout_page(request):
     logout(request)
@@ -54,7 +55,8 @@ def register(request):
         if form.is_valid():
             form.save()
             context = {'message':'Account created!'}
-            return render(request, 'ktGuide/login.html', context)
+            template = loader.get_template('ktGuide/login_page.html')
+            return HttpResponse(template.render(context, request))
     else:
         form = CustomUserForm()
     context = {'form':form}
